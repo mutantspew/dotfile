@@ -2,7 +2,7 @@ from dialog import Dialog
 import os
 import sys
 import time
-import argparse
+# import argparse
 
 class OSPackage:
   package_manager = "apt install"
@@ -21,11 +21,11 @@ def downloadDotFiles():
   #download with curl?
   #probably git clone dotfiles
 
-def preinstall():
+def installLoop():
   for x in range(10):
     installPackage(x)
 
-def linkDotFiles():
+def dotFilesLoop():
   pass
 
 # def set_args(parser):
@@ -35,12 +35,12 @@ def linkDotFiles():
   # add change package file
   # add change dotfile git
 
-def setArgs():
-  parser = argparse.ArgumentParser()
+# def setArgs():
+#   parser = argparse.ArgumentParser()
 
   # set_args()
 
-  args = parser.parse_args()
+  # args = parser.parse_args()
 
 def installPackage(package):
   d.infobox("Installing package '{}'".format(package))
@@ -48,11 +48,28 @@ def installPackage(package):
   #install package here
 
 def finalize():
-  d.msgbox("Finished install")
+  d.msgbox("Finished setup")
+
+def mainMenu():
+  choices = [("Install", "Install packages for this system"),
+             ("Config", "Download dotfiles for this system"),
+             ("Exit", "Exit script")]
+
+  code, tag = d.menu("Main menu", choices=choices)
+
+  if code == d.OK:
+    if(tag == "Exit"):
+      return True
+    elif (tag == "Config"):
+      dotFilesLoop()
+    elif (tag == "Install"):
+      installLoop()
+  else:
+    return True
 
 # PASS OPTIONS???
 # ARGS?????
-setArgs()
+# setArgs()
 
 d = Dialog(dialog="dialog", autowidgetsize=True)
 
@@ -66,21 +83,21 @@ License: GNU GPLv3"""
 
 d.msgbox(welcome_msg)
 
-# replace with menu, menu selects linking, or installing
-if d.yesno("Ready to start?") == d.CANCEL:
-  clearAndExit()
+exit = False
+while not exit:
+  exit = mainMenu()
 
 #install backend
-d.msgbox("First we install some files")
-preinstall()
+# d.msgbox("First we install some files")
+# preinstall()
 
 # download dotfiles
-d.msgbox("Now, we will link the dotfiles")
-downloadDotFiles()
+# d.msgbox("Now, we will link the dotfiles")
+# downloadDotFiles()
 
 # link dotfiles
-d.msgbox("Linking files")
-linkDotFiles()
+# d.msgbox("Linking files")
+# linkDotFiles()
 
 finalize()
 clear()
