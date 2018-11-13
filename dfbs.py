@@ -3,7 +3,7 @@ import os
 import sys
 import time
 # import argparse
-import requests
+import requests # change to aiohttp so it's not blocking
 
 # inputbox for custom download url,filename??
 #   use for custom program.csv's?
@@ -58,6 +58,19 @@ def installLoop():
 def dotFilesLoop():
   d.msgbox("Test")
 
+  code, tag = d.menu("Pick a CSV file", choices=[("Ubuntu/Debian", "Download Ubuntu/Debian File"),
+                                                 ("Arch", "Download Arch File"),
+                                                 ("Custom", "Enter Custom Location For File")])
+
+  if code == d.OK:
+    if tag == "Ubuntu/Debian":
+      d.msgbox(tag)
+    elif tag == "Arch":
+      d.msgbox(tag)
+    else:
+      d.msgbox(tag)
+
+
   url = "https://www.gettyimages.ie/gi-resources/images/Homepage/Hero/UK/CMS_Creative_164657191_Kingfisher.jpg"
   downloadFile(url, "FileName1.jpg")
 
@@ -82,6 +95,12 @@ def installPackage(package):
 
 def finalize():
   d.msgbox("Finished setup")
+
+# reads the comma-seperated-values file
+# returns a list of packages to be built and
+# a list of packages to install with the package manager
+def readCSVFile(file):
+  pass
 
 def mainMenu():
   choices = [("Install", "Install packages for this system"),
