@@ -14,23 +14,21 @@ def downloadFile(url, filename):
   d.gauge_update(0)
 
   with open(filename, 'wb') as file:
-    resp = requests.get(url, stream=True)
-    total_len = resp.headers.get('content-length')
+    with requests.get(url, stream=True) as resp:
+      total_len = resp.headers.get('content-length')
 
-    if total_len is None: # no content length header
-      file.write(resp.content)
-      d.gauge_update(100)
-    else:
-      dl = 0
-      total_len = int(total_len)
-      for data in resp.iter_content(chunk_size=4096):
-        dl += len(data)
-        file.write(data)
-        done = int(dl / total_len)
+      if total_len is None: # no content length header
+        file.write(resp.content)
+        d.gauge_update(100)
+      else:
+        dl = 0
+        total_len = int(total_len)
+        for data in resp.iter_content(chunk_size=1024):
+          dl += len(data)
+          file.write(data)
+          done = int(dl / total_len * 100)
 
-        time.sleep(1)
-
-        d.gauge_update(done)
+          d.gauge_update(done)
 
   exit_code = d.gauge_stop() # clean up
 
