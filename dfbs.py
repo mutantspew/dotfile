@@ -5,6 +5,9 @@ import time
 # import argparse
 import requests # change to aiohttp so it's not blocking
 
+#add to csv file or make a new one from inside script
+#   maybe make it able to scan packages already installed and tag them also make them selectable
+
 # inputbox for custom download url,filename??
 #   use for custom program.csv's?
 
@@ -56,23 +59,27 @@ def installLoop():
     installPackage(x)
 
 def dotFilesLoop():
-  d.msgbox("Test")
+  url = ""
+  filename = ""
 
-  code, tag = d.menu("Pick a CSV file", choices=[("Ubuntu/Debian", "Download Ubuntu/Debian File"),
-                                                 ("Arch", "Download Arch File"),
-                                                 ("Custom", "Enter Custom Location For File")])
+  while True:
+    code, tag = d.menu("Pick a CSV file", choices=[("Ubuntu/Debian", "Download Ubuntu/Debian File"),
+                                                  ("Arch", "Download Arch File"),
+                                                  ("Custom", "Enter Custom Location For File")])
 
-  if code == d.OK:
-    if tag == "Ubuntu/Debian":
-      d.msgbox(tag)
-    elif tag == "Arch":
-      d.msgbox(tag)
+    if code == d.OK:
+      if tag == "Ubuntu/Debian":
+        d.msgbox(tag)
+      elif tag == "Arch":
+        d.msgbox(tag)
+      else:
+        d.msgbox(tag)
     else:
-      d.msgbox(tag)
+      break
 
 
-  url = "https://www.gettyimages.ie/gi-resources/images/Homepage/Hero/UK/CMS_Creative_164657191_Kingfisher.jpg"
-  downloadFile(url, "FileName1.jpg")
+  # url = "https://www.gettyimages.ie/gi-resources/images/Homepage/Hero/UK/CMS_Creative_164657191_Kingfisher.jpg"
+  # downloadFile(url, "FileName1.jpg")
 
 # def set_args(parser):
   # parser.add_argument()
@@ -100,6 +107,14 @@ def finalize():
 # returns a list of packages to be built and
 # a list of packages to install with the package manager
 def readCSVFile(file):
+  ## nothing - install everywhere
+  ## g - git clone
+  ## a - AUR package has to be built
+  ## s - server only install
+  ## TAG, NAME, DESCRIPTION
+  ## TAG = one of the above codes
+  ## NAME = package name to install
+  ## DESCRIPTION = comment about package for menu
   pass
 
 def mainMenu():

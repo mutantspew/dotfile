@@ -1,0 +1,3 @@
+TAG, NAME, DESCRIPTION
+ , base-dlevel, group package with sudo and compilation software
+ , git, version control system
